@@ -129,8 +129,7 @@ function horsey (el, options) {
   function add (suggestion) {
     var li = tag('li', 'sey-item');
     render(li, suggestion);
-    var clickEvent = ('onpointerdown' in window) ? 'pointerdown' : 'click';
-    crossvent.add(li, clickEvent, clickedSuggestion);
+    crossvent.add(li, 'click', clickedSuggestion);
     crossvent.add(li, 'horsey-filter', filterItem);
     crossvent.add(li, 'horsey-hide', hideItem);
     ul.appendChild(li);
@@ -349,10 +348,10 @@ function horsey (el, options) {
   }
 
   function hideOnBlur (e) {
-    if (horseyEventTarget(e)) {
-      return;
+    var which = e.which || e.keyCode;
+    if (which === KEY_TAB) {
+      hide();
     }
-    hide();
   }
 
   function hideOnClick (e) {
@@ -385,14 +384,7 @@ function horsey (el, options) {
       crossvent[op](attachment, 'keydown', deferredFilteringNoEnter);
       crossvent[op](attachment, 'paste', deferredFiltering);
       crossvent[op](attachment, 'keydown', keydown);
-      if (o.autoHideOnBlur) {
-        crossvent[op](attachment, 'keydown', function(e){
-          var which = e.which || e.keyCode;
-          if (which === KEY_TAB) {
-            hide();
-          }
-        });
-      }
+      if (o.autoHideOnBlur) { crossvent[op](attachment, 'keydown', hideOnBlur); }
     } else {
       crossvent[op](attachment, 'click', toggler);
       crossvent[op](docElement, 'keydown', keydown);
