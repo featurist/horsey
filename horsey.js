@@ -747,15 +747,15 @@ function autocomplete (el, options = {}) {
       loading();
     }
     if (anyInput) {
-      crossvent[op](attachment, 'keypress', deferredShow);
-      crossvent[op](attachment, 'keypress', deferredFiltering);
-      crossvent[op](attachment, 'keydown', deferredFilteringNoEnter);
+      crossvent[op](attachment, 'input', deferredShow);
+      crossvent[op](attachment, 'input', deferredFiltering);
+      crossvent[op](attachment, 'input', deferredFilteringNoEnter);
       crossvent[op](attachment, 'paste', deferredFiltering);
-      crossvent[op](attachment, 'keydown', keydown);
-      if (o.autoHideOnBlur) { crossvent[op](attachment, 'keydown', hideOnBlur); }
+      crossvent[op](attachment, 'input', keydown);
+      if (o.autoHideOnBlur) { crossvent[op](attachment, 'input', hideOnBlur); }
     } else {
       crossvent[op](attachment, 'click', toggler);
-      crossvent[op](docElement, 'keydown', keydown);
+      crossvent[op](docElement, 'input', keydown);
     }
     if (o.autoHideOnClick) { crossvent[op](doc, 'click', hideOnClick); }
     if (form) { crossvent[op](form, 'submit', hide); }
